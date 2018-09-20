@@ -1,0 +1,46 @@
+// ========================================
+//
+// @file _navigation.scss
+// All the navigation elements on the page
+//
+// ========================================
+
+
+nav{
+	&.block-menu{
+		display: inline-block;
+		vertical-align: middle;
+		.menu{
+			//text-align: right;
+			.menu-item {
+				display: inline-block;
+				padding: 0 10px 0 10px;
+				a{
+					font-size: 17px;
+					line-height: 21px;
+					&:hover, &:active {
+					}
+				}
+
+			}
+		}
+		&.menu--main {
+			.menu {
+				.menu-item {
+					a{
+						//@include btn($highlight-link, none ,transparent, $dark-grey);
+
+						&.is-active {
+							display: none;
+						}
+						&:hover {
+							border: none;
+						}
+					}
+
+				}
+
+			}
+		}
+	}
+}

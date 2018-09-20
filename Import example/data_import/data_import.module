@@ -1,0 +1,525 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_migrate.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node as Node;
+use Drupal\taxonomy\Entity\Term as Term;
+use Drupal\file\Entity\File;
+use Drupal\Core\Entity;
+use \Drupal\user\Entity\User;
+use Drupal\data_import\DataImportStorage;
+use Drupal\Core\Database\Database;
+use Drupal\Component\Utility\Html;
+
+/**
+ *
+ *
+ * /**
+ * Implements hook_help().
+ */
+function data_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.data_import':
+      $output = '';
+      $output .= '<h3>' . t('CSV import furniture') . '</h3>';
+      $output .= '<p>' . t('Import content from CSV files, by default it supports <strong>Node</strong>, <strong>Taxonomy</strong> and <strong>User</strong> import.') . '</p>';
+      $output .= '<h4>' . t('Usage') . '</h4>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Choose CSV file') . '</li>';
+      $output .= '<li>' . t('Press <strong>CSV import</strong>') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+
+function _data_import_action($line, $line_no, &$context) {
+
+  $query = \Drupal::database()->select('node__field_sku', 'f');
+  $query->addField('f', 'entity_id', 'nid');
+  $query->condition('f.field_sku_value', $line[4], '=');
+  $result_sku_exist = $query->execute()->fetchField();
+
+  if (!empty($result_sku_exist)) {
+
+    //Node update
+    $node = Node::load($result_sku_exist);
+    _data_import_node_update($node, $line, $line_no);
+
+  } else {
+
+    _data_import_node_create($node, $line, $line_no);
+
+  }
+
+}
+
+function get_field_column_map() {
+  $fields = [
+    [
+      'field_name' => 'title',
+      'type' => 'core',
+      'column_id' => 0,
+    ],
+
+    [
+      'field_name' => 'field_product_type',
+      'type' => 'term',
+      'column_id' => 1,
+      'vid' => 'product_type'
+    ],
+
+    [
+      'field_name' => 'field_manufacturer',
+      'type' => 'term',
+      'column_id' => 2,
+      'vid' => 'manufacturer',
+    ],
+
+
+    [
+      'field_name' => 'field_collection_name',
+      'type' => 'term',
+      'column_id' => [3, 20],
+      'vid' => 'collection_name'
+    ],
+
+    [
+      'field_name' => 'field_sku',
+      'type' => 'text',
+      'column_id' => 4,
+      'vid' => 'sku'
+    ],
+
+    [
+      'field_name' => 'field_design_style',
+      'type' => 'term',
+      'column_id' => 5,
+      'vid' => 'design_style'
+    ],
+
+    [
+      'field_name' => 'field_width',
+      'type' => 'text',
+      'column_id' => 6,
+    ],
+
+    [
+      'field_name' => 'field_depth',
+      'type' => 'text',
+      'column_id' => 7,
+    ],
+
+    [
+      'field_name' => 'field_height',
+      'type' => 'text',
+      'column_id' => 8,
+    ],
+
+    [
+      'field_name' => 'field_product_image',
+      'type' => 'managed_file',
+      'column_id' => [9, 10, 11, 12, 13, 14],
+    ],
+
+    [
+      'field_name' => 'field_materials',
+      'type' => 'term',
+      'column_id' => 15,
+      'vid' => 'materials'
+    ],
+
+    [
+      'field_name' => 'field_finish',
+      'type' => 'term',
+      'column_id' => 16,
+      'vid' => 'finish'
+    ],
+
+    [
+      'field_name' => 'field_fabric',
+      'type' => 'term',
+      'column_id' => 17,
+      'vid' => 'fabric'
+    ],
+
+    [
+      'field_name' => 'field_pattern',
+      'type' => 'term',
+      'column_id' => 18,
+      'vid' => 'pattern'
+    ],
+
+    [
+      'field_name' => 'field_item_copy',
+      'type' => 'text',
+      'column_id' => 19,
+    ],
+
+
+    [
+      'field_name' => 'field_designer',
+      'type' => 'term',
+      'column_id' => 21,
+      'vid' => 'designer'
+    ],
+
+    [
+      'field_name' => 'field_find_a_retailer_url',
+      'type' => 'link',
+      'column_id' => 22,
+    ],
+
+    [
+      'field_name' => 'field_features',
+      'type' => 'multi_text',
+      'column_id' => [23, 24, 25, 26, 27, 28],
+    ],
+
+    [
+      'field_name' => 'field_options',
+      'type' => 'key_value',
+      'column_id' => [29, 30, 31, 32, 33, 34],
+    ],
+  ];
+
+  return $fields;
+}
+
+function _data_import_add_furniture_item($node, $line, $line_no) {
+
+  $mappedfields = get_field_column_map();
+
+  foreach ($mappedfields as $field) {
+
+    switch ($field['type']) {
+      case "core":
+        _data_import_title($node, $field, $line, $line_no);
+        break;
+
+      case "text":
+        _data_import_text($node, $field, $line, $line_no);
+        break;
+
+      case  "multi_text":
+        _data_import_multi_text($node, $field, $line, $line_no);
+        break;
+
+      case "term":
+        _data_import_term($node, $field, $line, $line_no);
+        break;
+
+      case "link":
+        _data_import_link($node, $field, $line, $line_no);
+        break;
+
+      case "managed_file":
+        _data_import_managed_file($node, $field, $line, $line_no);
+
+        break;
+
+      case  "key_value":
+        _data_import_key_value($node, $field, $line, $line_no);
+        break;
+
+      default:
+        continue;
+    }
+  }
+  $node->save();
+}
+
+function _data_import_title(&$node, $field, $line, $line_no) {
+
+  if (!empty($line[$field['column_id']])) {
+    $field['value'] = $line[$field['column_id']];
+    $node->set('title', $field['value']);
+  }
+
+}
+
+function _data_import_text(&$node, $field, $line, $line_no) {
+
+  if (!empty($line[$field['column_id']])) {
+    $field['value'] = $line[$field['column_id']];
+    $node->set($field['field_name'], $field['value']);
+  }
+}
+
+function _data_import_multi_text(&$node, $field, $line, $line_no) {
+
+  if (is_array($field['column_id'])) {
+
+    foreach ($field['column_id'] as $item) {
+      if (!empty($line[$item])) {
+
+        $field['value'] = $line[$item];
+        $values[] = $field['value'];
+
+        $node->set($field['field_name'], $values);
+
+      }
+    }
+
+  } elseif (!empty($line[$field['column_id']])) {
+
+    $field['value'] = $line[$field['column_id']];
+
+    $node->set($field['field_name'], $field['value']);
+
+  }
+
+}
+
+function _data_import_link(&$node, $field, $line, $line_no) {
+  if (!empty($line[$field['column_id']])) {
+    $field['value'] = $line[$field['column_id']];
+    $node->set($field['field_name'], $field['value']);
+  }
+}
+
+function _data_import_term(&$node, $field, $line, $line_no) {
+
+
+  if (is_array($field['column_id']) &&
+    !empty($line[$field['column_id'][0]]) ||
+    !empty($line[$field['column_id'][1]])) {
+
+    $term_name = $line[$field['column_id'][0]];
+    $term_description = $line[$field['column_id'][1]];
+
+  } elseif (!empty($line[$field['column_id']])) {
+
+    $field['value'] = $line[$field['column_id']];
+    $term_name = $field['value'];
+    $term_description = '';
+
+  }
+
+  if (!empty($term_name)) {
+
+    $term = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(['name' => $term_name, 'vid' => $field['vid']]);
+
+    if ($term) {
+
+      $term = reset($term);
+      $term->setDescription($term_description);
+
+    } else {
+
+      $term = \Drupal\taxonomy\Entity\Term::create([
+        'vid' => $field['vid'],
+        'name' => $term_name,
+        'description' => $term_description,
+      ]);
+
+    }
+
+    $term->save();
+    $field['tid'] = $term->id();
+
+    $node->set($field['field_name'], $field['tid']);
+  }
+}
+
+function _data_import_managed_file(&$node, $field, $line, $line_no) {
+
+  $fids = [];
+
+  foreach ($field['column_id'] as $item) {
+
+    if (!empty($line[$item])) {
+
+      $fid = get_data($line[$item], $line, $line_no);
+      if (!empty($fid)) {
+
+        $fids[] = $fid;
+
+      }
+    }
+  }
+
+  $node->set($field['field_name'], $fids);
+}
+
+function _data_import_key_value(&$node, $field, $line, $line_no) {
+
+  $val = [];
+
+  if (!empty($line[29]) && !empty($line[30])) {
+    $val[] = [
+      'key' => $line[29],
+      'value' => $line[30],
+    ];
+  }
+
+  if (!empty($line[31]) && !empty($line[32])) {
+    $val[] = [
+      'key' => $line[31],
+      'value' => $line[32],
+    ];
+  }
+
+  if (!empty($line[33]) && !empty($line[34])) {
+    $val[] = [
+      'key' => $line[33],
+      'value' => $line[34],
+    ];
+  }
+
+  $node->set($field['field_name'], $val);
+
+}
+
+function _data_import_node_create(&$node, $line, $line_no) {
+
+  $import_user = user_load_by_name('import');
+
+  $node = Node::create(['type' => 'furniture_item', 'uid' => $import_user->id()]);
+
+  //Import
+  _data_import_add_furniture_item($node, $line, $line_no);
+}
+
+function _data_import_node_update(&$node, $line, $line_no) {
+  //Add field values
+  _data_import_add_furniture_item($node, $line, $line_no);
+}
+
+function get_data($url, $line, $line_no) {
+
+  $ch = curl_init();
+  $timeout = 5;
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_HEADER, true);
+  curl_setopt($ch, CURLOPT_FILETIME, true);
+  curl_setopt($ch, CURLOPT_NOBODY, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+
+  $data = curl_exec($ch);
+
+  $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+  $validate_ct = [
+    0 => 'image/gif',
+    1 => 'image/jpeg',
+    2 => 'image/png',
+  ];
+
+  if (in_array($content_type, $validate_ct)) {
+
+    $uri = system_retrieve_file($url, NULL, FALSE, FILE_EXISTS_REPLACE);
+
+    // check first if the file exists for the uri
+    $files = \Drupal::entityTypeManager()
+      ->getStorage('file')
+      ->loadByProperties(['uri' => $uri]);
+    $file = reset($files);
+
+
+    $import_user = user_load_by_name('import');
+
+    // if not create a file
+    if (!$file) {
+      $file = File::create([
+        'uri' => $uri,
+        'uid' => $import_user->get('uid')->value,
+      ]);
+
+    }
+
+    $file->save();
+    $fid = $file->id();
+
+    curl_close($ch);
+    return $fid;
+
+  } else {
+
+
+
+    $message = drupal_set_message("One or more image links for product with sku: $line[4] on $line_no line of the document is missing or is not valid, please make sure that ALL links points to image! ", 'error');
+
+
+    $user = Drupal::currentUser();
+
+    data_import_log(
+      $user->id(),
+      $line[4],
+      "Import | Image not valid",
+      "Cancelled",
+      "Submitted image not a valid format :url | Content type: :ct",
+      [':url' => $url, ':ct' => $content_type]
+    );
+
+    return null;
+  }
+}
+
+function _data_import_delete_node($manufacturer_tid, &$context) {
+
+  $query = \Drupal::database()->select('taxonomy_index', 't');
+  $query->addField('t', 'nid', 'node');
+  $query->condition('t.tid', $manufacturer_tid, '=');
+  $results = $query->execute()->fetchCol();
+
+  if (!empty($results)) {
+
+    foreach ($results as $index => $result) {
+
+      $node = Node::load($result);
+
+      $node->delete();
+    }
+  }
+}
+
+function _machineName($item) {
+
+  $item = preg_replace('@[^a-z0-9_]+@', '_', strtolower($item));
+
+  return $item;
+}
+
+
+/**
+ * Data import log
+ *
+ * @param $op
+ * @param $type
+ * @param $message
+ * @param $vars
+ *
+ * @throws \Exception
+ */
+function data_import_log($uid, $sku, $type, $status, $message, $vars = []) {
+  $return_value = NULL;
+
+  try {
+    $return_value = Database::getConnection();
+    $return_value->insert('data_import_table')
+      ->fields(array(
+        'uid' => $uid,
+        'type' => HTML::escape($type),
+        'sku' => $sku,
+        'status' => HTML::escape($status),
+        'message' => $message,
+        'vars' => serialize($vars),
+        'timestamp' => time(),
+      ))
+      ->execute();
+  } catch (\Exception $e) {
+    \Drupal::messenger()->addMessage(t('db_insert failed. Message = %message', [
+        '%message' => $e->getMessage(),
+      ]
+    ), 'error');
+  }
+  return $return_value;
+}

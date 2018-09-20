@@ -1,0 +1,79 @@
+// ========================================
+//
+// @file _base.scss
+// Base level tags and styles
+//
+// ========================================
+
+::selection {
+  background: lighten($gray-dark, 10%);
+  color: $body-bg;
+}
+
+::-moz-selection {
+  background: lighten($gray-dark, 10%);
+  color: $body-bg;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  background: $body-bg;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.6;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#page {
+  overflow: hidden;
+;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+img{
+  display: block;
+  height: auto;
+  margin: 0;
+  max-width: 100%;
+  transition: 0.4s;
+}
+
+.field-type-file,.file {
+  padding-top: 5px;
+  img {
+    display: inline-block;
+  }
+}
+
+
+#admin-menu {
+  li {
+    font-size: 12px!important;
+  }
+}
+
+
+
+span.field-label {
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin-right: 6px;
+  font-family: $font-family-teaser;
+}
+
+.field {
+  font-family: $font-family-teaser;
+}

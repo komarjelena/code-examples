@@ -1,0 +1,207 @@
+// ========================================
+//
+// @file _forms.scss
+// Inputs and other various form elements
+//
+// ========================================
+
+form {
+	padding-bottom: 30px;
+}
+
+fieldset {
+	text-align: left;
+	label {
+		position: relative;
+	}
+}
+
+.form-item {
+	position: relative;
+	width: 100%;
+
+	@include border-radius(50%);
+}
+
+.homepage-textfield{
+	display: none;
+}
+
+//*************************
+// Form elements in form
+//************************
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],input[type=textarea] {
+	@include border-radius(50px);
+	padding: 27px 80px 27px 30px;
+	width: 100%;
+	max-width: 1024px;
+	border: 2px solid $gray-input;
+	outline: none;
+	height: 3rem;
+	letter-spacing: 1.3px;
+	margin: 0;
+	font-size: 20px;
+	color: $black!important;
+	line-height: 14px;
+	font-weight: 300;
+	-webkit-box-shadow: none;
+	transition: all 0.3s;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-webkit-transition: all 0.3s;
+	box-shadow: none;
+	&:focus, &:active {
+	}
+	#block-views-exp-search-page  &{
+		box-sizing: content-box;
+		-webkit-box-sizing: content-box;
+	}
+}
+
+//panel override
+.panel {
+	margin-bottom: 0;
+	background-color: transparent;
+	border-radius: 0;
+	border: 0;
+	outline: 0;
+	box-shadow: none;
+	.panel-body {
+		padding: 0 0 20px 0;
+	}
+}
+
+table {
+	td{
+		padding: 30px;
+		@media (max-width: $screen-sm-min) {
+			display: block;
+			padding: 30px 10px;
+		}
+	}
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border-bottom: 1px solid $gray;
+    -webkit-text-fill-color: $gray;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea {
+
+    &:focus {
+
+    }
+}
+
+input[type="checkbox"] {
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	-ms-appearance: checkbox;     /* not currently supported */
+	-o-appearance: checkbox;      /* not currently supported */
+	opacity:0;
+	margin: 0 0 0 20px!important;
+	width: 0;
+	height: 20px;
+}
+
+input[type="radio"] {
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	-ms-appearance: checkbox;     /* not currently supported */
+	-o-appearance: checkbox;      /* not currently supported */
+	opacity:0;
+	margin: 0 0 0 20px!important;
+	width: 0;
+	height: 20px;
+}
+
+label{
+	&.control-label {
+		padding-left: 0!important;
+		line-height: 22px;
+		.form-radios &, .form-type-checkbox &{
+			padding-left: 40px!important;
+			&:before {
+				content: '';
+				width: 20px;
+				height: 20px;
+				border-radius: 4px;
+				background-color: $white;
+				display: inline-block;
+				top: 1px;
+				position: absolute;
+				color: $black;
+				left: 0;
+			}
+			&:after {
+				content: '\002713';
+				width: 20px;
+				height: 20px;
+				border-radius: 4px;
+				background-color: transparent;
+				display: inline-block;
+				top: 1px;
+				position: absolute;
+				visibility: hidden;
+				color: black;
+				left: 3px;
+
+			}
+			&.checked {
+				&:after {
+					visibility: visible!important;
+				}
+			}
+
+		}
+		.popup-element-origin & {
+			&:after {
+				top: 4px;
+			}
+		}
+	}
+
+}
+
+input[type="file"] {
+
+	&:focus {
+
+	}
+}
+input[type="submit"] {
+	outline: none;
+	border: none;
+	transition: 0.4s;
+}
+
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+	display: none;
+}
+
+.form-actions {
+	margin-top: 20px;
+	button {
+		@extend .btn-default;
+	}
+}
+.webform-submit {
+	outline: none!important;
+}

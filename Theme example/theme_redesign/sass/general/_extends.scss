@@ -1,0 +1,338 @@
+// ========================================
+//
+// @file _extends.scss
+// File containing all Sass extendables
+//
+// ========================================
+
+
+/*-------------------------------------------*/
+/* List items - general
+/*-------------------------------------------*/
+.element-list {
+
+
+  @include block-default-bgd($white);
+
+  .block-title {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 0.12px;
+    margin-bottom: 19px;
+    margin-top: 7px;
+    line-height: 28px;
+    //padding-left: 20px;
+  }
+
+  .field-name {
+    &-field-top-image {
+      display: inline-block;
+      //margin-right: 30px;
+      img {
+        margin-bottom: 24px;
+        display: block;
+      }
+    }
+    &-post-date {
+      color: $gray;
+      padding-bottom: 15px;
+      font-family: $font-family-base;
+    }
+
+    &-body,
+    &-field-quote {
+      margin: 0;
+      padding: 0;
+      p {
+        line-height: 27px;
+        font-size: 20px;
+        font-family: $font-family-teaser;
+        letter-spacing: 0.09px;
+        color: $gray-dark;
+      }
+      img {
+        display: none;
+      }
+      @media (max-width: $screen-md-min) {
+        max-height: 100%;
+      }
+    }
+    &-title {
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.17px;
+        line-height: 32px;
+
+        a{
+          //color: inherit;
+        }
+      }
+    }
+
+    &-field-news{
+      h3 {
+        margin: 0;
+      }
+
+      border-top: 3px solid $background-grey;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+  }
+
+  .views-row {
+    position: relative;
+    @include border(2px,$background-grey);
+    margin-bottom: 30px;
+
+    &.views-row-last {
+      margin-bottom: 0;
+      &:after {
+        display: none;
+      }
+    }
+    .front & {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+      border: none;
+    }
+    .page-blog &{
+
+    }
+
+  }
+
+  @media (max-width: $screen-lg-min) {
+    padding-top: 19px;
+    .block-title {
+      padding-left: 15px!important;
+    }
+    .page-blog & {
+      .view-header,.view-content,.view-footer {
+        padding: 0 15px;
+      }
+    }
+    .field-name {
+      &-field-top-image {
+        margin: 0!important;
+        img {
+          margin-bottom: 24px;
+          display: block;
+        }
+      }
+    }
+  }
+  @media (max-width: $screen-sm-min) {
+
+    .field-name {
+      &-post-date {
+        padding-bottom: 5px!important;
+      }
+      &-body,
+      &-field-quote {
+        padding-bottom: 5px!important;
+      }
+      &-title {
+        padding-bottom: 5px!important;
+        h2 {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+  @media (max-width: $screen-xs-min) {
+
+
+    .node {
+      display: flex;
+      flex-direction: column;
+      .field-name {
+        &-field-top-image {
+          margin: 0!important;
+          order: 1;
+          img {
+            margin-bottom: 17px;
+            display: block;
+          }
+        }
+        &-post-date {
+          padding-bottom: 5px!important;
+          order: 3;
+        }
+        &-body,
+        &-field-quote {
+          padding-bottom: 5px!important;
+          order: 4;
+        }
+        &-title {
+          padding-bottom: 5px!important;
+          order: 2;
+          h2 {
+            padding-bottom: 0;
+          }
+        }
+        &-node-link {
+          order: 5;
+          text-align: left;
+        }
+      }
+    }
+    .field-name {
+      &-field-top-image {
+        margin: 0!important;
+        img {
+          margin-bottom: 24px;
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+/*-------------------------------------------*/
+/* CTA - block style
+/*-------------------------------------------*/
+.block-cta {
+  .block-bean {
+    .block-title {
+      display: none;
+    }
+    .field-type {
+      &-file,
+      &-link-field {
+        display: none;
+      }
+      &-text-long {
+        width: 100%;
+        height: auto;
+        margin-bottom: 30px;
+        h2,p {
+          color: $white;
+        }
+        h2 {
+          font-size: 48px;
+          font-weight: 900;
+          letter-spacing: -0.45px;
+          line-height: 42px;
+        }
+        p {
+          font-family: $font-family-teaser;
+          letter-spacing: -1.09px;
+          line-height: 42px;
+          font-size: 35px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $screen-lg-min) {
+    justify-content: flex-start;
+    min-height: 552px!important;
+    padding-bottom: 37px;
+  }
+  // field-name-field-cta-block-reference - mobile
+  @media (max-width: $screen-xs-min) {
+    justify-content: flex-start;
+    min-height: 473px!important;
+    padding-bottom: 34px;
+    background-position: left top !important;
+    .block-bean {
+      .field-type {
+        &-text-long {
+          width: 100%;
+          height: auto;
+          margin-bottom: 30px;
+          padding: 0;
+          h2, p {
+            color: $white;
+          }
+          h2 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.26px;
+            line-height: 33px;
+          }
+          p {
+            font-family: $font-family-teaser;
+            font-size: 26px;
+            letter-spacing: -0.81px;
+            line-height: 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*-------------------------------------------*/
+/* Quick links style - block menu
+/*-------------------------------------------*/
+
+.quick-links {
+  h2{
+    color: $black;
+    font-size: 24px;
+    border-bottom: 3px solid $gray-light;
+    padding-bottom: 14px;
+    letter-spacing: 0.12px;
+    line-height: 28px;;
+    a{
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+  .nav,ul {
+    padding: 0;
+    padding-top: 11px;
+    li {
+      list-style: none;
+        &.active-trail {
+          > a {
+            font-weight: bold;
+          }
+        }
+      &.expanded {
+        > ul {
+          padding-left: 20px;
+        }
+      }
+      a {
+        text-transform: uppercase;
+        display: inline-block;
+        color: $link-color;
+        font-size: $font-size-base;
+        padding: 7px 10px 0 0 !important;
+        font-weight: 400;
+        letter-spacing: normal;
+        &:after {
+          content: "\f105";
+          @include fontawesome-icon;
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          padding-left: 22px;
+          vertical-align: top;
+          font-size: 24px;
+          color: $gray-light;
+          font-weight: bold;
+
+        }
+        &:hover, &:active, &:focus {
+          background: none!important;
+          text-decoration: underline;
+          outline: none;
+        }
+        &.active {
+          font-weight: bold;
+        }
+      }
+
+      ul {
+        padding: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,211 @@
+// ========================================
+//
+// @file _footer.scss
+// Footer element on the page
+//
+// ========================================
+
+
+/*----------------------------------*/
+/*FOOTER*/
+/*----------------------------------*/
+#footer-wrapper{
+	color: $white;
+	font-family: $font-family-base;
+	//margin-top: 20px;
+	background-image: url("../img/layout/background/blue.png");
+	background-size: cover;
+	.container {
+		padding: 0;
+	}
+	img {
+		max-width: 200px;
+	}
+
+	@media (max-width: $screen-lg-min) {
+		padding: 0 15px;
+	}
+
+	.footer{
+		padding-bottom: 0;
+		border-top: none;
+		margin: 0;
+
+		@media (max-width: $screen-sm-min) {
+			padding: 35px 0 0 0;
+		}
+		.container {
+			border-bottom: 2px solid $white;
+		}
+
+		#block-menu-block-9 {
+			.nav {
+				 li {
+					 &:nth-child(odd),&:nth-child(2) {
+						 padding-right: 30px!important;
+					 }
+					 @media (max-width: $screen-sm-min) {
+
+						 &.expanded {
+							 margin-bottom: 65px;
+						 }
+						 &.menu-mlid-2785,
+						 &.menu-mlid-3110{
+							 ul {
+								 li {
+									 margin-top: 25px;
+									 a {
+										 width: 32px!important;
+										 height: 32px!important;
+									 }
+								 }
+							 }
+
+						 }
+					 }
+
+					 @media (max-width: $screen-xs-min) {
+						 &:nth-child(odd),&:nth-child(2) {
+							 padding-right: 0!important;
+						 }
+						 &.expanded {
+							 margin-bottom: 55px;
+						 }
+						 &.menu-mlid-2785,
+						 &.menu-mlid-3110{
+							 ul {
+								 text-align: center;
+								 li {
+									 margin-top: 25px;
+									 a {
+										 width: 32px!important;
+										 height: 32px!important;
+									 }
+								 }
+							 }
+
+						 }
+					 }
+					// padding: 0 20px 76px 0!important;
+					&.expanded {
+						> a {
+							font-weight: 900;
+							letter-spacing: 0.09px;
+						}
+						@include make-xs-column(12,33);
+						@include make-sm-column(6,33);
+						@include make-md-column(6,33);
+						@include make-lg-column(3,33);
+
+						> ul {
+							border-top: 2px solid $border;
+							padding: 0!important;
+							li {
+								padding: 0!important;
+								a {
+									font-weight: 400;
+									@include for-tablet-portrait-up{
+										font-size: 18px;
+									}
+								}
+
+							}
+						}
+						&.menu-mlid-2785,
+						&.menu-mlid-3110{
+
+							padding: 0 0px 76px 0!important;
+							ul{
+
+								border-top: none;
+								li{
+									display: inline-block;
+									width: 23%;
+									vertical-align: middle;
+									a{
+										font-size: 0;
+										width: 35px;
+										height: 35px;
+										display: inline-block;
+										vertical-align: top;
+										&.facebook {
+											background: no-repeat url("../img/layout/footer/social/Facebook@2x.png") center center/100%;
+											background-image: url("../img/layout/footer/social/Facebook@3x.svg"), none;
+
+										}
+										&.linkedin {
+											background:no-repeat url("../img/layout/footer/social/Linkedin.png") center center/100%;
+											background-image: url("../img/layout/footer/social/Linkedin@3x.svg"), none;
+
+										}
+										&.twitter {
+											background:no-repeat url("../img/layout/footer/social/Twitter.png") center center/100%;
+											background-image: url("../img/layout/footer/social/Twitter@3x.svg"), none;
+
+										}
+										&.youtube {
+											background: no-repeat url("../img/layout/footer/social/Youtube.png") center center/100%;
+											background-image: url("../img/layout/footer/social/Youtube@3x.svg"), none;
+
+										}
+									}
+								}
+							}
+						}
+					}
+					a {
+						padding: 0;
+						color: $white;
+						@media (max-width: $screen-sm-min){
+							font-size: 20px;
+						}
+
+						&:hover,&:focus{
+							text-decoration: underline;
+							background-color: transparent;
+							border: none;
+						}
+					}
+
+
+					 ul {
+						 li {
+
+							 margin-top: 20px;
+						 }
+					 }
+
+				}
+
+			}
+		}
+		#block-block-10 {
+			padding-bottom: 10px;
+			img{
+				float: right;
+			}
+
+			@media (max-width: $screen-sm-min) {
+				img {
+					float: none;
+					margin: 0 auto;
+					width: 75%;
+				}
+			}
+		}
+	}
+	.footer-bottom{
+		padding-bottom: 48px;
+		text-align: center;
+		padding-top: 33px;
+
+		@media (max-width: $screen-sm-min) {
+			padding-bottom: 44px;
+			padding-top: 26px;
+		}
+	}
+}
+
+
+
+

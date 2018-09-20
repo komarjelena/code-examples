@@ -1,0 +1,267 @@
+// ========================================
+//
+// @file _typography.scss
+// Base level typography, fonts, colors, sizes
+//
+// ========================================
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-base;
+  color: $text-color;
+  text-transform: capitalize;
+  font-weight: 700;
+  margin-top: 0;
+  a {
+    color: $link-color;
+    font-size: inherit;
+
+    &:hover {
+      color: $link-color;
+      text-decoration: underline;
+    }
+  }
+
+  .field-name-body &{
+    margin-top: 0;
+  }
+}
+
+h1 {
+  font-size: 44px;
+  letter-spacing: -0.88px;
+  line-height: 1.18;
+}
+
+h2 {
+  font-size: 38px;
+  letter-spacing: -0.76px;
+  line-height: 1.6;
+
+}
+
+h3 {
+  font-size: 30px;
+  letter-spacing: -0.6px;
+  line-height: 1.26;
+}
+
+h4 {
+  font-size: 24px;
+  letter-spacing: -0.48px;
+  line-height: 1.33;
+}
+
+//h5 {
+//  @include rem('font-size', 18px);
+//}
+//
+//h6 {
+//  @include rem('font-size', 14px);
+//}
+
+
+
+a {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  transition: 0.9s;
+  color: $general-color;
+  text-decoration: none;
+  text-transform: capitalize;
+  &:hover,&:active {
+    text-decoration: underline;
+  }
+
+  .field-name-body & {
+    text-transform: lowercase;
+  }
+}
+
+ul {
+  margin: 0;
+ // padding-left: 20px;
+  padding-bottom: 20px;
+  li {
+    letter-spacing: -0.4px;
+    line-height: 36px;
+    list-style: disc;
+    font-weight: 400;
+    font-family: $font-family-teaser;
+
+    span {
+      font-weight: inherit!important;
+    }
+
+    a{
+      font-weight: bold;
+    }
+
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .field-name-body & {
+    padding-left: 20px;
+    li {
+      list-style: disc;
+    }
+  }
+
+  &.site-map-menu {
+    li {
+      list-style: disc!important;
+    }
+  }
+}
+
+
+ol {
+
+  li {
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+p {
+  font-family: $font-family-teaser;
+  font-size: $font-size-base;
+  letter-spacing: -0.4px;
+  line-height: 35px;
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: 300;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .field-name-body & {
+    letter-spacing: -0.4px;
+    line-height: 35px;
+    font-size: $font-size-large;
+
+    a{
+      color: $general-color;
+      text-transform: lowercase!important;
+      font-weight: bold;
+      &:hover {
+        text-decoration: underline;
+      }
+      &.btn-default {
+        @extend .btn-default;
+      }
+    }
+
+  }
+  img {
+    width: auto;
+    display: inline-block;
+    margin-right: 5px;
+
+  }
+
+}
+
+.field-name-body {
+  padding-bottom: 30px;
+  font-family: $font-family-teaser;
+  iframe {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  img {
+    width: auto;
+    display: inline-block;
+    margin-right: 5px;
+
+  }
+  @media (max-width: $screen-sm-min) {
+    &.front {
+      iframe {
+        width: 90%;
+        height: auto;
+      }
+    }
+    iframe {
+      width: 100%;
+    }
+
+  }
+
+}
+
+.node {
+  &.view-mode-full {
+    .field-name-body {
+      p {
+        &.intro {
+          color: #266CCD;
+          font-family: $font-family-base;
+          font-size: 33px;
+          font-weight: 700;
+          letter-spacing: -0.66px;
+          line-height: 39px!important;
+        }
+        span {
+          line-height: 0!important;
+        }
+      }
+    }
+
+  }
+}
+
+/*----------------------------------------------------------*/
+/* Introduction field
+/*----------------------------------------------------------*/
+.field-name-field-introduction {
+  margin-bottom: 10px;
+  color: #266CCD;
+  font-family: $font-family-base;
+  font-size: 33px;
+  font-weight: 700;
+  letter-spacing: -0.66px;
+  line-height: 39px!important;
+}
+
+blockquote {
+  font-style: italic;
+  font-weight: lighter;
+  p{
+    font-style: italic;
+    font-weight: lighter;
+    line-height: 1.4;
+  }
+  position: relative;
+  display: inline-block;
+  &:before,
+  &:after {
+    content: '"';
+    position: absolute;
+    font-size: 2.7em;
+  }
+  &:before{
+    top: -12px;
+    left: -8px;
+  }
+  &:after {
+    bottom: -61px;
+    right: 4px;
+  }
+}
+.field-name-field-quote {
+  color: $black;
+  font-family: $font-family-teaser;
+  font-size: 20px;
+  letter-spacing: -0.4px;
+  line-height: 35px;
+  font-weight: 300;
+}

@@ -1,0 +1,43 @@
+{
+  "messages": {
+    "error": {
+      "title": "Error",
+      "message": "Gulp reported error: <%= error.message %>!"
+    },
+    "success": {
+      "title": "Success",
+      "message": "Gulp tasks completed successfully!"
+    }
+  },
+  "sass": {
+    "src": "../sass/**/*.scss",
+    "destination": "../assets/css",
+    "sourcemaps": "../css",
+    "config": {
+      "style": "compressed",
+      "errLogToConsole": true,
+      "includePaths": []
+    },
+    "autoprefixer": [
+      "last 2 versions",
+      "> 1%",
+      "ie 9",
+      "ie 10"
+    ]
+  },
+  "javascript": {
+    "file": "main.js",
+    "src": "../scripts/*.js",
+    "destination": "../assets/js",
+    "sourcemaps": "../js"
+  },
+  "images": {
+    "src": "../assets/img/**/*",
+    "destination": "../assets/img",
+    "config": {
+      "optimizationLevel": 5,
+      "progressive": true,
+      "interlaced": true
+    }
+  }
+}

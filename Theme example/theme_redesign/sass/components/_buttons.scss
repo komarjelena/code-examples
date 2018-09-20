@@ -1,0 +1,228 @@
+// ========================================
+//
+// @file _buttons.scss
+// Form buttons, call to action buttons
+//
+// ========================================
+
+.btn-default {
+  @include element-circle(50px);
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 10px 36px 10px 30px;
+  position: relative;
+  border: 2px solid $btn-default-border;
+  &:after {
+    @include fa-angle-icon($general-color);
+    content: "\f105";
+    top: 0;
+    right: 7px;
+    font-size: 25px;
+  }
+}
+
+
+.cta-button {
+  padding: 24px 0;
+  a {
+    @include btn($white, $general-color, transparent, 20px);
+    letter-spacing: 1.3px;
+    line-height: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: 20px 54px!important;
+    position: relative;
+    &:after {
+      top: 22px;
+      right: 17px;
+      font-size: 46px!important;
+      .yellow & {
+        color: $orange!important;
+      }
+      .green & {
+        color: $green!important;
+      }
+      .pink & {
+        color: $pink!important;
+      }
+    }
+    .yellow & {
+      @include btn($white, $orange, transparent, 20px);
+    }
+    .green & {
+
+      @include btn($white, $green, transparent, 20px);
+    }
+    .pink & {
+
+      @include btn($white, $pink, transparent, 20px);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .sidebar &{
+    a{
+      @include btn($white, $white, transparent, 20px);
+      &:after {
+        color: $white;
+      }
+    }
+  }
+  @media (max-width: $screen-xs-min) {
+    text-align: center;
+    padding: 17px 0;
+    a{
+      padding:11px 40px 11px 10px !important;
+      font-size: 14px !important;
+      display: inline-block;
+      width: 90%;
+      &:after {
+        top: 10px;
+        right: 17px;
+        font-size: 28px !important;
+      }
+    }
+  }
+  .popup-element-body & {
+    padding: 24px 0 0 0;
+    a{
+      padding: 10px 36px 10px 30px;
+      background: no-repeat url(../img/layout/pop-up/btn/send@3x.svg)right/auto;
+      width: 100%;
+      display: block;
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
+
+
+.read-more-dots{
+  position: relative;
+  text-transform: uppercase;
+  &:after {
+    content: '...';
+    position: absolute;
+    display: block;
+    color: $blue;
+    width: 25px;
+    height: 10px;
+    top: -13px;
+    right: -34px;
+    font-size: 27px;
+  }
+}
+
+.field-name-field-landing-page-url,
+.field-type-link-field{
+  a{
+    @extend .btn;
+    @extend .btn-default;
+  }
+}
+
+
+.field-name-node-link {
+  text-align: right;
+  margin-right: 61px;
+  margin-top: 25px;
+  padding-bottom: 30px;
+  a {
+    @extend .read-more-dots;
+  }
+}
+
+.pagination{
+  height: 36px;
+  width: auto;
+  background: $white;
+  position: relative;
+
+  li{
+    border: none;
+    a{
+      border: none;
+      @media (max-width: $screen-xs-min) {
+        padding: 6px 6px!important;
+      }
+    }
+    &.active{
+      span {
+        background-color: $white;
+        border: none;
+        padding: 5px 12px 7px 12px;
+        cursor: pointer!important;
+        &:hover {
+          background-color: $white;
+        }
+      }
+    }
+    &.next {
+      background: white;
+      a {
+        padding: 17px 14px;
+        font-size: 0;
+        &:after {
+          @include fa-angle-icon($general-color);
+          content: "\f105";
+          top: 1px;
+          right: 7px;
+          font-size: 24px;
+        }
+      }
+    }
+    &.prev {
+      background: $white;
+      a{
+        padding: 17px 14px;
+        font-size: 0;
+        &:before {
+          @include fa-angle-icon($general-color);
+          content: "\f104";
+          left: 7px;
+          top:0;
+          font-size: 24px;
+        }
+      }
+    }
+    &.pager-first,
+    &.pager-last{
+      display: none;
+    }
+    &.pager-ellipsis {
+      span {
+        border: none;
+      }
+    }
+  }
+}
+
+
+.ssl{
+  margin: 30px 0!important;
+  span {
+    display: none;
+  }
+  display: inline-block;
+  vertical-align: top;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  background: $general-color;
+  &.ssl-facebook {
+    background: no-repeat url("../img/layout/footer/social/Facebook_native.svg");
+    background-position: bottom;
+  }
+  &.ssl-twitter {
+    background: no-repeat url("../img/layout/footer/social/Twitter_native.svg");
+    background-position: bottom;
+  }
+  &.ssl-linkedin {
+    background: no-repeat url("../img/layout/footer/social/Linkedin_native.svg");
+    background-position: bottom;
+  }
+}

@@ -1,0 +1,4 @@
+import content from csv:
+  title: 'Import content from csv'
+  description: 'With this permission user can import contents from a CSV source'
+  restrict access: TRUE

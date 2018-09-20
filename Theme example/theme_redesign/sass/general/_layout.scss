@@ -1,0 +1,191 @@
+// ========================================
+//
+// @file _layout.scss
+// Basic page layouts, widths, margins, paddings
+//
+// ========================================
+
+
+body:not(.front) {
+	.page-info,#page {
+		background-color: $background-grey;
+	}
+
+}
+body  {
+	&.mobile-overlay {
+		&:after {
+			position: absolute;
+			content: "";
+			background-color: rgba(255,255,255,0.8);
+			display: block;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+	}
+}
+.container{
+	@include container-fixed(30px);
+	padding: 0;
+	footer & {
+		padding-bottom: 25px;
+	}
+
+	#header & {
+		padding: 30px 0;
+		@media (max-width: $screen-xs-min) {
+			padding: 20px 0 20px;
+		}
+
+	}
+
+	.wrapper {
+		@include make-row(30px);
+		padding: 0 15px;
+	}
+
+	@media (max-width: $screen-lg-min) {
+		width: 100%!important;
+		padding: 0 15px;
+	}
+}
+
+.main-container{
+
+	@include container-fixed(30px);
+	padding: 0!important;
+
+	.node-type-new-landing-page & {
+		width: 100%;
+		padding: 0!important;
+	}
+	.region-content {
+		//padding-bottom: 30px;
+		.front & {
+			padding-bottom: 30px;
+		}
+	}
+
+	@media (max-width: $screen-lg-min) {
+		width: 100%!important;
+		padding: 0 15px!important;
+
+		.node-type-new-landing-page & {
+			padding: 0!important;
+		}
+	}
+}
+
+#highlighted {
+	display: none;
+}
+
+// ========================================
+//  Page layout for ones with two sidebars
+// ========================================
+
+.layout-two-sidebars:not(.node-type-new-landing-page) {
+
+	.main {
+		@include make-row(30px);
+		.page-info {
+			@include make-xs-column(12, 30px);
+			@include make-sm-column(6, 30px);
+			@include make-md-column(6, 30px);
+			@include make-lg-column(6, 30px);
+
+			padding-bottom: 30px;
+		}
+		.sidebar {
+
+			@include make-xs-column(12, 30px);
+			@include make-sm-column(3, 30px);
+			@include make-lg-column(3, 30px);
+			@include make-md-column(3, 30px);
+
+		}
+
+
+	}
+
+}
+
+// ========================================
+//  Page layout for ones with one sidebars
+// ========================================
+
+.layout-one-sidebar:not(.node-type-new-landing-page) {
+
+	.main {
+		@include make-row(30px);
+
+		.page-info {
+			@include make-xs-column(12,30px);
+			@include make-sm-column(12,30px);
+			@include make-md-column(12,30px);
+			@include make-lg-column(8,30px);
+
+			padding-bottom: 30px;
+		}
+		.sidebar {
+			@include make-xs-column(12,30px);
+			@include make-sm-column(12,30px);
+			@include make-md-column(12,30px);
+			@include make-lg-column(4,30px);
+			//padding-left: 0!important;
+		}
+
+		@media (max-width: $screen-lg-min) {
+			.page-info {
+				padding-right: 15px!important;
+			}
+		}
+		@media (max-width: $screen-xs-min) {
+			.sidebar {
+				//padding-left: 15px!important;
+			}
+		}
+		.page-find-a-centre &{
+			.page-info {
+				padding-right: 0!important;
+			}
+			.sidebar {
+				padding-left: 0!important;
+			}
+			@media (max-width: $screen-lg-min) {
+				//.page-info {
+				//	padding-right: 15px!important;
+				//}
+			}
+			@media (max-width: $screen-xs-min) {
+				.sidebar {
+					padding-left: 15px!important;
+				}
+			}
+		}
+	}
+
+}
+
+// =========================================================
+//  Page layout for ones with no sidebars and not logged in
+// =========================================================
+
+.layout-no-sidebars:not(.node-type-new-landing-page){
+
+	.main {
+		@include make-row(30px);
+		.page-info {
+			@include make-lg-column(12, 30px);
+			@include make-md-column(12, 30px);
+			@include make-sm-column(12, 30px);
+			@include make-xs-column(12, 30px);
+			padding-bottom: 30px;
+		}
+	}
+}
+

@@ -1,0 +1,8 @@
+data_import.form:
+ path: '/admin/config/development/import'
+ defaults:
+   _title: 'Import TSV'
+   _form: '\Drupal\data_import\Form\ImportForm'
+ requirements:
+   _permission: 'import content from tsv'
+

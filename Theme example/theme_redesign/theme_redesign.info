@@ -1,0 +1,69 @@
+name = Theme Redesign Theme
+description = Theme starter theme, working as a custom Bootstrap sub-theme.
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+regions[navigation]     = 'Navigation'
+regions[header]         = 'Header'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[content_top] 		= 'Content Top'
+regions[content]        = 'Content'
+regions[content_bottom] = 'Content Bottom'
+regions[sidebar_first]  = 'Sidebar First'
+regions[sidebar_second] = 'Sidebar Second'
+regions[page_top]       = 'Page top'
+regions[page_bottom]    = 'Page bottom'
+regions[footer_top]     = 'Footer Top'
+regions[footer]         = 'Footer Middle'
+regions[footer_bottom]  = 'Footer Bottom'
+regions[testimonial]    = 'Testimonial Front'
+regions[map_front]      = 'Map Front'
+
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = assets/css/style.css
+
+
+
+; ;----------------------------------
+; ; BOOTSTRAP SCRIPTS
+; ;----------------------------------
+; For information on choosing the desired method, please read the Drupal
+; Bootstrap sub-theme "how-to" documentation:
+; https://drupal.org/node/1978010
+; ;;;;;;;;;;;;;;;;;;;;;
+; ;; Scripts
+; ;;;;;;;;;;;;;;;;;;;;;
+;
+ scripts[] = 'bootstrap/assets/js/bootstrap/affix.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/alert.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/button.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/carousel.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/collapse.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/dropdown.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/modal.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/tooltip.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/popover.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/scrollspy.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/tab.js'
+ scripts[] = 'bootstrap/assets/js/bootstrap/transition.js'
+
+; ; Disable BootstrapCDN if using Bootstrap source files in your sub-theme.
+settings[bootstrap_cdn] = ''
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; ADDIITONAL SCRIPTS
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = 'assets/js/vendor/jquery.matchHeight.js'
+scripts[] = 'assets/js/main.js'

@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+
+function data_import_schema() {
+
+  $schema['data_import_table'] = array(
+    'description' => 'Data import Table',
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique data import event ID.',
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {users}.uid of the user who triggered the event.',
+      ),
+      'sku' => array(
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The product id.',
+      ),
+      'type' => array(
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Type of log message, for example "user" or "page not found."',
+      ),
+      'message' => array(
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big',
+        'description' => 'Text of log message to be passed into the t() function.',
+      ),
+      'status' => array(
+        'type' => 'text',
+        'length' => 64,
+        'not null' => TRUE,
+        'description' => 'Status of the passed event.',
+      ),
+      'vars' => array(
+        'type' => 'blob',
+        'not null' => TRUE,
+        'size' => 'big',
+        'description' => 'Serialized array of variables that match the message string and that is passed into the t() function.',
+      ),
+      'timestamp' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of when event occurred.',
+      ),
+    ),
+    'primary key' => array(
+      'id',
+    ),
+    'indexes' => array(
+      'type' => array(
+        'type',
+      ),
+      'uid' => array(
+        'uid',
+      ),
+    ),
+  );
+
+  return $schema;
+
+}

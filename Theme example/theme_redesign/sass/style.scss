@@ -1,0 +1,39 @@
+// ========================================
+//
+// @file application.scss
+// Main output file combining all the Sass imports
+//
+// ========================================
+
+
+
+// Default variables.
+@import 'default-variables';
+
+// Bootstrap Framework.
+@import '../bootstrap/assets/stylesheets/bootstrap';
+
+// Base-theme overrides.
+@import 'overrides';
+
+// - - - - - - - - - - - - - - - - - - - -
+// Import vendor files
+// - - - - - - - - - - - - - - - - - - - -
+@import 'vendor/vendor';
+
+// - - - - - - - - - - - - - - - - - - - -
+// Import core files
+// - - - - - - - - - - - - - - - - - - - -
+@import 'general/general';
+
+// - - - - - - - - - - - - - - - - - - - -
+// Import module files
+// - - - - - - - - - - - - - - - - - - - -
+@import 'components/components';
+
+// - - - - - - - - - - - - - - - - - - - -
+// Import page files
+// - - - - - - - - - - - - - - - - - - - -
+@import 'pages/pages';
+
+// - - - - - - - - - - - - - - - - - - - -

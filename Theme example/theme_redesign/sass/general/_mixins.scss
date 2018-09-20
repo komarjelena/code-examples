@@ -1,0 +1,263 @@
+// ========================================
+//
+// @file _mixins.scss
+// File containing all Sass mixins
+//
+// ========================================
+
+// - - Output property and value in rem with px fallback
+@mixin rem($property, $values) {
+	$font-size: $font-family-base;
+	$px-values: ();
+	$rem-values: ();
+
+	@each $value in $values {
+		@if $value == 0 or $value == 0px {
+			$px-values: join($px-values, 0);
+			$rem-values: join($rem-values, 0);
+		} @else if type-of($value) == number and not unitless($value) and (unit($value) == px) {
+			$new-rem-value: $value / $font-size;
+			$px-values: join($px-values, round($value));
+			$rem-values: join($rem-values, #{$new-rem-value}rem);
+		} @else if type-of($value) == number and not unitless($value) and (unit($value) == "%") {
+			$px-values: join($px-values, #{$value});
+			$rem-values: join($rem-values, #{$value});
+		} @else if $value == auto {
+			$px-values: join($px-values, auto);
+			$rem-values: join($rem-values, auto);
+		} @else {
+			$px-values: join($px-values, round($value * $font-size));
+			$rem-values: join($rem-values, #{$value}rem);
+		}
+	}
+
+	#{$property}: $px-values;
+	#{$property}: $rem-values;
+}
+
+// - - Clearfix
+@mixin clearfix {
+	zoom: 1;
+
+	&:before,
+	&:after {
+		content: "\0020";
+		display: block;
+		height: 0;
+		overflow: hidden;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+// - - Image for retina
+@mixin image-2x($image, $width, $height) {
+	@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
+		background-image: url($image);
+		background-size: $width $height;
+	}
+}
+
+// - - CSS calc function
+@mixin calc($property, $expression) {
+	#{$property}: calc(#{$expression});
+}
+
+// - - Placeholder color
+@mixin placeholder($color, $opacity: 1) {
+	&::-webkit-input-placeholder {
+		color: $color;
+		opacity: $opacity;
+	}
+	&:-moz-placeholder {
+		color: $color;
+		opacity: $opacity;
+	}
+	&::-moz-placeholder {
+		color: $color;
+		opacity: $opacity;
+	}
+	&:-ms-input-placeholder {
+		color: $color;
+		opacity: $opacity;
+	}
+}
+
+
+@mixin for-phone-only {
+	@media (max-width: $screen-xs-max) { @content; }
+}
+@mixin for-tablet-portrait-up {
+	@media (max-width: $screen-sm-max) { @content; }
+}
+@mixin for-desktop-up {
+	@media (max-width: $screen-md-max) { @content; }
+}
+
+// - - Circle border radius
+@mixin element-circle($value) {
+	/* Safari 3-4, iOS 1-3.2, Android 1.6- */
+	-webkit-border-radius: $value;
+
+	/* Firefox 1-3.6 */
+	-moz-border-radius: $value;
+
+	/* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+	border-radius: $value;
+}
+
+// - -  Mixin for more-link style
+@mixin read-more($color:$btn-default-color,$background: $btn-default-bg,$border-def-color: $btn-default-border) {
+
+		@include element-circle(50px);
+		color: $color;
+		background: $background;
+		text-transform: uppercase;
+		font-size: 14px;
+		padding: 10px 20px 10px 0;
+		position: relative;
+		border: 2px solid $border-def-color;
+		display: inline-block;
+		text-align: center;
+		width: 300px;
+		&:after {
+			content: '';
+			width: 25px;
+			height: 25px;
+			display: block;
+			background: no-repeat url(../img/layout/pagination/next/right.png) center center;
+			position: absolute;
+			right: 10px;
+			top: 6px;
+
+		}
+}
+
+
+// - - Mixin for transitions on elements
+@mixin transition($args...) {
+	-moz-transition:    $args;
+	-o-transition:      $args;
+	-webkit-transition: $args;
+	transition:         $args;
+}
+
+// - - Mixin for button style
+@mixin btn($color, $border, $background, $size){
+	border-radius: 100px;
+	color: $color;
+	border: 3px solid $border;
+	background: $background;
+	font-size: $size;//reduced
+	padding: 12px 28px 10px;
+	cursor: pointer;
+	@include transition(0.5s);
+	&:hover, &:active {
+		text-decoration: underline;
+	}
+	&:after {
+		@include fa-angle-icon($general-color);
+		content: "\f105";
+		.yellow & {
+			color: $orange;
+		}
+		.green & {
+			color: $green;
+		}
+		.pink & {
+			color: $pink;
+		}
+	}
+}
+
+@mixin border($px,$color) {
+	&:after {
+		content: '';
+		width: 100%;
+		height: $px;
+		display: block;
+		background: $color;
+		position: absolute;
+
+	}
+}
+
+// - -  Mixin for Font-awesome icon on pseudo element
+@mixin fontawesome-icon {
+	font-family: FontAwesome;
+	text-rendering: auto;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+@mixin fa-angle-icon($color) {
+	@include fontawesome-icon;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	padding: 0;
+	vertical-align: top;
+	position: absolute;
+	color: $color;
+}
+
+@mixin block-default-bgd($bgd-color) {
+	background: $bgd-color;
+	@include border-radius(5px);
+	padding: 17px 15px;
+	margin-bottom: 30px;
+}
+
+
+@mixin layout-menu-color($layout-color){
+	@if $layout-color == 'learners' {
+		background: $orange;
+		color: white;
+
+	}@else if($layout-color == 'learning-providers'){
+		background: $green;
+		color: white;
+
+	}@else if($layout-color == 'employers-governments'){
+		background: $pink;
+		color: white;
+	}
+}
+
+
+@mixin border-radius($radius:$border-radius-base) {
+	border-radius: $radius;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+}
+
+//Coloring theme according to body classes
+
+$txt-colors:
+	".learners, .menu-class-learners" $orange,
+	".learning-providers, .menu-class-learning-providers" $green,
+	".employers-governments, .menu-class-employers--governments" $pink;
+
+@each $sel, $color in $txt-colors {
+
+	.block-left #{$sel} .field-name-field-quick-link a {
+		background-color: $color;
+		border: none;
+		color: $white;
+		&:after {
+			color: $white;
+		}
+	}
+	#{$sel} .bean-2-3-topic {
+		.field-name-field-bold-text {
+			color: $color;
+		}
+	}
+	#{$sel} .layout-bgd-image {
+
+	}
+
+}
+
